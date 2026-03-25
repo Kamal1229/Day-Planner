@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PlanFlow — Dashboard</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'><rect width='28' height='28' rx='8' fill='%236366f1'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Sora:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════
+       HEADER
+  ══════════════════════════════════════════ -->
+  <header class="app-header">
+    <div class="header-left">
+      <div class="brand-icon small">
+        <svg width="20" height="20" viewBox="0 0 28 28" fill="none">
+          <rect width="28" height="28" rx="8" fill="#6366f1"/>
+          <rect x="6" y="8" width="6" height="6" rx="1.5" fill="white"/>
+          <rect x="16" y="8" width="6" height="6" rx="1.5" fill="white" opacity="0.5"/>
+          <rect x="6" y="16" width="6" height="6" rx="1.5" fill="white" opacity="0.5"/>
+          <rect x="16" y="16" width="6" height="6" rx="1.5" fill="white"/>
+        </svg>
+      </div>
+      <span class="app-brand-name">PlanFlow</span>
+    </div>
+
+    <div class="header-center" id="header-date"></div>
+
+    <div class="header-right">
+      <div class="sync-pill" id="sync-pill">
+        <div class="sync-dot" id="sync-dot"></div>
+        <span id="sync-label">Synced</span>
+      </div>
+      <div class="user-menu">
+        <img class="user-avatar" id="user-avatar" src="" alt="" />
+        <div class="user-info-dropdown">
+          <span class="user-name" id="user-name"></span>
+          <span class="user-email" id="user-email"></span>
+        </div>
+      </div>
+      <button class="btn-signout" id="logout-btn" title="Sign out">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M6 14H3a1 1 0 01-1-1V3a1 1 0 011-1h3M11 11l3-3-3-3M14 8H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Sign out</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════════════════
+       SIDEBAR NAVIGATION
+  ══════════════════════════════════════════ -->
+  <div class="app-layout">
+
+    <aside class="sidebar">
+      <nav class="sidebar-nav">
+
+        <div class="nav-section-label">Tasks</div>
+
+        <button class="nav-item active" data-tab="daily">
+          <div class="nav-icon daily-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M8 5v3l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span>Daily</span>
+          <div class="nav-badge" id="nav-badge-daily">0/3</div>
+        </button>
+
+        <button class="nav-item" data-tab="weekly">
+          <div class="nav-icon weekly-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <rect x="2" y="3" width="12" height="11" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M5 1v2M11 1v2M2 6h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span>Weekly</span>
+          <div class="nav-badge" id="nav-badge-weekly">0/3</div>
+        </button>
+
+        <button class="nav-item" data-tab="monthly">
+          <div class="nav-icon monthly-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M2 4h12v9a1 1 0 01-1 1H3a1 1 0 01-1-1V4z" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M2 4V3a1 1 0 011-1h10a1 1 0 011 1v1" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M6 8h4M6 11h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span>Monthly</span>
+          <div class="nav-badge" id="nav-badge-monthly">0/3</div>
+        </button>
+
+        <button class="nav-item" data-tab="yearly">
+          <div class="nav-icon yearly-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 2l1.5 4.5H14l-3.75 2.75 1.5 4.5L8 11l-3.75 2.75 1.5-4.5L2 6.5h4.5L8 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span>Yearly</span>
+          <div class="nav-badge" id="nav-badge-yearly">0/3</div>
+        </button>
+
+        <div class="nav-section-label" style="margin-top:1rem">Analytics</div>
+
+        <button class="nav-item" data-tab="overview">
+          <div class="nav-icon overview-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <rect x="2" y="8" width="3" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/>
+              <rect x="6.5" y="5" width="3" height="9" rx="1" stroke="currentColor" stroke-width="1.5"/>
+              <rect x="11" y="2" width="3" height="12" rx="1" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <span>Overview</span>
+        </button>
+
+        <button class="nav-item" data-tab="calendar">
+          <div class="nav-icon calendar-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <rect x="2" y="3" width="12" height="11" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M5 1v2M11 1v2M2 6h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="5.5" cy="9.5" r="1" fill="currentColor"/>
+              <circle cx="8" cy="9.5" r="1" fill="currentColor"/>
+              <circle cx="10.5" cy="9.5" r="1" fill="currentColor"/>
+            </svg>
+          </div>
+          <span>Calendar</span>
+          <div class="nav-new-badge">New</div>
+        </button>
+
+      </nav>
+
+      <!-- Sidebar footer -->
+      <div class="sidebar-footer">
+        <div class="streak-card">
+          <div class="streak-icon">🔥</div>
+          <div class="streak-info">
+            <div class="streak-num" id="streak-num">0</div>
+            <div class="streak-label">day streak</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ══════════════════════════════════════════
+         MAIN CONTENT
+    ══════════════════════════════════════════ -->
+    <main class="app-main">
+
+      <!-- ── DAILY TAB ── -->
+      <section class="tab-panel active" id="panel-daily">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2 class="panel-title">Daily Tasks</h2>
+            <p class="panel-subtitle" id="daily-subtitle"></p>
+          </div>
+          <div class="period-nav-group">
+            <button class="period-nav-btn" data-type="daily" data-dir="-1" title="Previous day">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <span class="period-nav-label" id="daily-nav-label">Today</span>
+            <button class="period-nav-btn" data-type="daily" data-dir="1" id="daily-next" title="Next day">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M6 12l4-4-4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Progress bar -->
+        <div class="progress-card">
+          <div class="progress-card-header">
+            <span class="progress-card-label">Today's completion</span>
+            <span class="progress-card-pct daily-text" id="daily-pct">0%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill daily-fill" id="daily-bar" style="width:0%"></div>
+          </div>
+          <div class="progress-card-meta" id="daily-meta">0 of 0 tasks completed</div>
+        </div>
+
+        <!-- Task list -->
+        <div class="task-list" id="daily-list"></div>
+
+        <!-- Add task -->
+        <div class="add-task-box" id="daily-add-box">
+          <input class="add-task-input" id="daily-input" placeholder="What's your focus for today?" maxlength="120" autocomplete="off"/>
+          <button class="add-task-btn daily-btn" data-type="daily">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Add Task
+          </button>
+        </div>
+        <p class="task-limit-note" id="daily-limit-note">Maximum 3 tasks per day — stay focused</p>
+
+        <!-- History -->
+        <div class="history-section">
+          <div class="history-section-header">
+            <h3 class="history-section-title">Recent Days</h3>
+          </div>
+          <div class="history-list" id="daily-history"></div>
+        </div>
+
+        <!-- Charts -->
+        <div class="charts-section">
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-title">Daily Completion Rate</h3>
+                <p class="chart-subtitle">% of tasks completed per day — last 14 days</p>
+              </div>
+            </div>
+            <div class="chart-container">
+              <canvas id="chart-daily-bar"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-title">Progress Trend</h3>
+                <p class="chart-subtitle">Running completion score — rises with done tasks, falls with incomplete</p>
+              </div>
+            </div>
+            <div class="chart-container">
+              <canvas id="chart-daily-line"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── WEEKLY TAB ── -->
+      <section class="tab-panel" id="panel-weekly">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2 class="panel-title">Weekly Tasks</h2>
+            <p class="panel-subtitle" id="weekly-subtitle"></p>
+          </div>
+          <div class="period-nav-group">
+            <button class="period-nav-btn" data-type="weekly" data-dir="-1">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <span class="period-nav-label" id="weekly-nav-label">This Week</span>
+            <button class="period-nav-btn" data-type="weekly" data-dir="1" id="weekly-next">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M6 12l4-4-4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="progress-card">
+          <div class="progress-card-header">
+            <span class="progress-card-label">Weekly completion</span>
+            <span class="progress-card-pct weekly-text" id="weekly-pct">0%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill weekly-fill" id="weekly-bar" style="width:0%"></div>
+          </div>
+          <div class="progress-card-meta" id="weekly-meta">0 of 0 tasks completed</div>
+        </div>
+        <div class="task-list" id="weekly-list"></div>
+        <div class="add-task-box" id="weekly-add-box">
+          <input class="add-task-input" id="weekly-input" placeholder="What's your goal this week?" maxlength="120" autocomplete="off"/>
+          <button class="add-task-btn weekly-btn" data-type="weekly">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Add Task
+          </button>
+        </div>
+        <p class="task-limit-note" id="weekly-limit-note">Maximum 3 tasks per week</p>
+        <div class="history-section">
+          <div class="history-section-header"><h3 class="history-section-title">Past Weeks</h3></div>
+          <div class="history-list" id="weekly-history"></div>
+        </div>
+        <div class="charts-section">
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-title">Weekly Completion Rate</h3>
+                <p class="chart-subtitle">% of tasks completed per week — last 12 weeks</p>
+              </div>
+            </div>
+            <div class="chart-container"><canvas id="chart-weekly-bar"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-title">Progress Trend</h3>
+                <p class="chart-subtitle">Running weekly completion score</p>
+              </div>
+            </div>
+            <div class="chart-container"><canvas id="chart-weekly-line"></canvas></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── MONTHLY TAB ── -->
+      <section class="tab-panel" id="panel-monthly">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2 class="panel-title">Monthly Tasks</h2>
+            <p class="panel-subtitle" id="monthly-subtitle"></p>
+          </div>
+          <div class="period-nav-group">
+            <button class="period-nav-btn" data-type="monthly" data-dir="-1">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <span class="period-nav-label" id="monthly-nav-label">This Month</span>
+            <button class="period-nav-btn" data-type="monthly" data-dir="1" id="monthly-next">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M6 12l4-4-4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="progress-card">
+          <div class="progress-card-header">
+            <span class="progress-card-label">Monthly completion</span>
+            <span class="progress-card-pct monthly-text" id="monthly-pct">0%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill monthly-fill" id="monthly-bar" style="width:0%"></div>
+          </div>
+          <div class="progress-card-meta" id="monthly-meta">0 of 0 tasks completed</div>
+        </div>
+        <div class="task-list" id="monthly-list"></div>
+        <div class="add-task-box" id="monthly-add-box">
+          <input class="add-task-input" id="monthly-input" placeholder="What's your goal this month?" maxlength="120" autocomplete="off"/>
+          <button class="add-task-btn monthly-btn" data-type="monthly">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Add Task
+          </button>
+        </div>
+        <p class="task-limit-note" id="monthly-limit-note">Maximum 3 tasks per month</p>
+        <div class="history-section">
+          <div class="history-section-header"><h3 class="history-section-title">Past Months</h3></div>
+          <div class="history-list" id="monthly-history"></div>
+        </div>
+        <div class="charts-section">
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-title">Monthly Completion Rate</h3>
+                <p class="chart-subtitle">% of tasks completed per month — last 12 months</p>
+              </div>
+            </div>
+            <div class="chart-container"><canvas id="chart-monthly-bar"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-title">Progress Trend</h3>
+                <p class="chart-subtitle">Running monthly completion score</p>
+              </div>
+            </div>
+            <div class="chart-container"><canvas id="chart-monthly-line"></canvas></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── YEARLY TAB ── -->
+      <section class="tab-panel" id="panel-yearly">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2 class="panel-title">Yearly Tasks</h2>
+            <p class="panel-subtitle" id="yearly-subtitle"></p>
+          </div>
+          <div class="period-nav-group">
+            <button class="period-nav-btn" data-type="yearly" data-dir="-1">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <span class="period-nav-label" id="yearly-nav-label">This Year</span>
+            <button class="period-nav-btn" data-type="yearly" data-dir="1" id="yearly-next">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M6 12l4-4-4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="progress-card">
+          <div class="progress-card-header">
+            <span class="progress-card-label">Yearly completion</span>
+            <span class="progress-card-pct yearly-text" id="yearly-pct">0%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill yearly-fill" id="yearly-bar" style="width:0%"></div>
+          </div>
+          <div class="progress-card-meta" id="yearly-meta">0 of 0 tasks completed</div>
+        </div>
+        <div class="task-list" id="yearly-list"></div>
+        <div class="add-task-box" id="yearly-add-box">
+          <input class="add-task-input" id="yearly-input" placeholder="What's your big goal this year?" maxlength="120" autocomplete="off"/>
+          <button class="add-task-btn yearly-btn" data-type="yearly">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Add Task
+          </button>
+        </div>
+        <p class="task-limit-note" id="yearly-limit-note">Maximum 3 tasks per year</p>
+        <div class="history-section">
+          <div class="history-section-header"><h3 class="history-section-title">Past Years</h3></div>
+          <div class="history-list" id="yearly-history"></div>
+        </div>
+        <div class="charts-section">
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-title">Yearly Completion Rate</h3>
+                <p class="chart-subtitle">% of tasks completed per year — all time</p>
+              </div>
+            </div>
+            <div class="chart-container"><canvas id="chart-yearly-bar"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-title">Progress Trend</h3>
+                <p class="chart-subtitle">Running yearly completion score</p>
+              </div>
+            </div>
+            <div class="chart-container"><canvas id="chart-yearly-line"></canvas></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── OVERVIEW TAB ── -->
+      <section class="tab-panel" id="panel-overview">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2 class="panel-title">Overview</h2>
+            <p class="panel-subtitle">Your complete progress at a glance</p>
+          </div>
+        </div>
+
+        <!-- 4 donut cards -->
+        <div class="donut-grid">
+          <div class="donut-card">
+            <div class="donut-card-label">Today</div>
+            <div class="donut-wrap">
+              <svg viewBox="0 0 100 100" class="donut-svg">
+                <circle cx="50" cy="50" r="38" fill="none" stroke="#1e1e2e" stroke-width="10"/>
+                <circle cx="50" cy="50" r="38" fill="none" stroke="#6366f1" stroke-width="10"
+                  stroke-dasharray="238.8" stroke-dashoffset="238.8"
+                  id="donut-daily" class="donut-ring" style="transition:stroke-dashoffset 0.7s ease"/>
+              </svg>
+              <div class="donut-center">
+                <div class="donut-pct daily-text" id="ov-daily-pct">0%</div>
+                <div class="donut-done" id="ov-daily-done">0/0</div>
+              </div>
+            </div>
+          </div>
+          <div class="donut-card">
+            <div class="donut-card-label">This Week</div>
+            <div class="donut-wrap">
+              <svg viewBox="0 0 100 100" class="donut-svg">
+                <circle cx="50" cy="50" r="38" fill="none" stroke="#1e1e2e" stroke-width="10"/>
+                <circle cx="50" cy="50" r="38" fill="none" stroke="#f59e0b" stroke-width="10"
+                  stroke-dasharray="238.8" stroke-dashoffset="238.8"
+                  id="donut-weekly" class="donut-ring" style="transition:stroke-dashoffset 0.7s ease"/>
+              </svg>
+              <div class="donut-center">
+                <div class="donut-pct weekly-text" id="ov-weekly-pct">0%</div>
+                <div class="donut-done" id="ov-weekly-done">0/0</div>
+              </div>
+            </div>
+          </div>
+          <div class="donut-card">
+            <div class="donut-card-label">This Month</div>
+            <div class="donut-wrap">
+              <svg viewBox="0 0 100 100" class="donut-svg">
+                <circle cx="50" cy="50" r="38" fill="none" stroke="#1e1e2e" stroke-width="10"/>
+                <circle cx="50" cy="50" r="38" fill="none" stroke="#10b981" stroke-width="10"
+                  stroke-dasharray="238.8" stroke-dashoffset="238.8"
+                  id="donut-monthly" class="donut-ring" style="transition:stroke-dashoffset 0.7s ease"/>
+              </svg>
+              <div class="donut-center">
+                <div class="donut-pct monthly-text" id="ov-monthly-pct">0%</div>
+                <div class="donut-done" id="ov-monthly-done">0/0</div>
+              </div>
+            </div>
+          </div>
+          <div class="donut-card">
+            <div class="donut-card-label">This Year</div>
+            <div class="donut-wrap">
+              <svg viewBox="0 0 100 100" class="donut-svg">
+                <circle cx="50" cy="50" r="38" fill="none" stroke="#1e1e2e" stroke-width="10"/>
+                <circle cx="50" cy="50" r="38" fill="none" stroke="#ef4444" stroke-width="10"
+                  stroke-dasharray="238.8" stroke-dashoffset="238.8"
+                  id="donut-yearly" class="donut-ring" style="transition:stroke-dashoffset 0.7s ease"/>
+              </svg>
+              <div class="donut-center">
+                <div class="donut-pct yearly-text" id="ov-yearly-pct">0%</div>
+                <div class="donut-done" id="ov-yearly-done">0/0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Overview charts -->
+        <div class="charts-section">
+          <div class="chart-card full-width">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-title">All-Time Monthly Trend</h3>
+                <p class="chart-subtitle">Monthly completion % over all recorded months</p>
+              </div>
+            </div>
+            <div class="chart-container"><canvas id="chart-overview-line"></canvas></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── CALENDAR TAB ── -->
+      <section class="tab-panel" id="panel-calendar">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2 class="panel-title">Calendar History</h2>
+            <p class="panel-subtitle">Browse any date to see completed and incomplete tasks</p>
+          </div>
+        </div>
+
+        <!-- Calendar navigation -->
+        <div class="cal-nav">
+          <button class="cal-nav-btn" id="cal-prev">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <h3 class="cal-month-label" id="cal-month-label"></h3>
+          <button class="cal-nav-btn" id="cal-next">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M6 12l4-4-4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Calendar grid -->
+        <div class="cal-grid-wrap">
+          <div class="cal-weekdays">
+            <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div>
+            <div>Thu</div><div>Fri</div><div>Sat</div>
+          </div>
+          <div class="cal-grid" id="cal-grid"></div>
+        </div>
+
+        <!-- Selected day detail -->
+        <div class="cal-detail" id="cal-detail">
+          <div class="cal-detail-empty">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+              <rect x="6" y="8" width="28" height="26" rx="4" stroke="#3a3a5c" stroke-width="2"/>
+              <path d="M12 4v4M28 4v4M6 16h28" stroke="#3a3a5c" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="14" cy="24" r="2" fill="#3a3a5c"/>
+              <circle cx="20" cy="24" r="2" fill="#3a3a5c"/>
+              <circle cx="26" cy="24" r="2" fill="#3a3a5c"/>
+            </svg>
+            <p>Select a date to view tasks</p>
+          </div>
+        </div>
+
+        <!-- Calendar charts -->
+        <div class="charts-section" style="margin-top:1.5rem">
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-title">Daily Completion — This Month</h3>
+                <p class="chart-subtitle">% of tasks completed per day (bar) and trend score (line)</p>
+              </div>
+            </div>
+            <div class="chart-container"><canvas id="chart-cal-bar"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-title">Progress Trend Score</h3>
+                <p class="chart-subtitle">Score goes up when tasks completed, down when incomplete</p>
+              </div>
+            </div>
+            <div class="chart-container"><canvas id="chart-cal-line"></canvas></div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <script type="module" src="js/auth.js"></script>
+  <script type="module" src="js/tasks.js"></script>
+  <script type="module" src="js/calendar.js"></script>
+</body>
+</html>
